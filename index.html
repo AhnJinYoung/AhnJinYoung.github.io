@@ -4,114 +4,398 @@
   <meta charset="UTF-8">
   <title>Ahn Jinyoung – Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top left, #1f2933, #020617 55%, #000000 100%);
+      --card-bg: rgba(15, 23, 42, 0.88);
+      --card-border: rgba(148, 163, 184, 0.25);
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --text-main: #e5e7eb;
+      --text-sub: #94a3b8;
+      --chip-bg: rgba(15, 118, 110, 0.16);
+      --chip-border: rgba(34, 211, 238, 0.4);
+    }
+
+    body.dark {
+      --bg-gradient: radial-gradient(circle at top left, #020617, #000000 55%, #000000 100%);
+      --card-bg: rgba(15, 23, 42, 0.96);
+      --card-border: rgba(148, 163, 184, 0.35);
+      --accent: #f97316;
+      --accent-soft: rgba(249, 115, 22, 0.12);
+      --text-main: #e5e7eb;
+      --text-sub: #9ca3af;
+      --chip-bg: rgba(88, 28, 135, 0.32);
+      --chip-border: rgba(192, 132, 252, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 24px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
       line-height: 1.6;
+      color: var(--text-main);
+      background: var(--bg-gradient);
+      background-attachment: fixed;
     }
-    header { margin-bottom: 32px; }
-    h1 { margin-bottom: 4px; }
-    nav a {
-      margin-right: 12px;
-      text-decoration: none;
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
+      z-index: -1;
+    }
+
+    .shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 20px 20px 80px;
+    }
+
+    @media (min-width: 768px) {
+      .shell {
+        padding: 26px 24px 96px;
+      }
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom,
+        rgba(15, 23, 42, 0.9),
+        rgba(15, 23, 42, 0.55),
+        transparent
+      );
+      margin-bottom: 18px;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 4px 8px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .nav-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-name {
       font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-sub);
     }
-    .section { margin-bottom: 40px; }
-    .project {
-      border: 1px solid #eee;
-      padding: 16px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-    }
-    .tag {
+
+    .nav-role {
       font-size: 0.8rem;
-      padding: 2px 6px;
-      border: 1px solid #ccc;
-      border-radius: 999px;
-      margin-right: 4px;
+      color: var(--text-main);
+      opacity: 0.75;
     }
-    .meta {
-      font-size: 0.85rem;
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.86rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-sub);
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: 0.16s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+      border-color: rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .toggle-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--text-sub);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.16s ease;
+    }
+
+    .toggle-btn span {
+      font-size: 0.95rem;
+    }
+
+    .toggle-btn:hover {
+      color: var(--text-main);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.35);
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr);
+      gap: 18px;
+      padding: 18px 4px 32px;
+    }
+
+    @media (min-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+        align-items: center;
+        padding-top: 28px;
+      }
+    }
+
+    .hero-main h1 {
+      font-size: clamp(2.0rem, 3vw, 2.6rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .hero-text {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      max-width: 34rem;
+    }
+
+    .hero-text strong {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      text-decoration: none;
+      font-size: 0.86rem;
+      color: var(--text-sub);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(14px);
+      transition: 0.16s ease;
+    }
+
+    .pill-link span.icon {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .pill-link:hover {
+      color: var(--text-main);
+      border-color: var(--accent);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .hero-aside {
+      border-radius: 18px;
+      border: 1px solid var(--card-border);
+      padding: 14px 16px 14px;
+      background: linear-gradient(
+        140deg,
+        rgba(15, 23, 42, 0.96),
+        rgba(15, 23, 42, 0.86)
+      );
+      box-shadow:
+        0 14px 45px rgba(15, 23, 42, 0.85),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      background: radial-gradient(circle at top left,
+        rgba(56, 189, 248, 0.25),
+        rgba(15, 23, 42, 0.9)
+      );
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.22);
+    }
+
+    .hero-aside-title {
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+
+    .hero-aside-list {
+      list-style: none;
+      font-size: 0.82rem;
+      color: var(--text-sub);
+    }
+
+    .hero-aside-list li + li {
+      margin-top: 4px;
+    }
+
+    /* GENERIC SECTIONS */
+    .section {
+      padding: 18px 4px 0;
+      margin-top: 6px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 14px;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+    }
+
+    .section-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-sub);
       opacity: 0.8;
     }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Ahn Jinyoung (안진영)</h1>
-    <p>SNU CSE undergrad interested in systems, OS, and large language models.</p>
-    <nav>
-      <a href="#projects">Projects</a>
-      <a href="#cv">CV</a>
-      <a href="#contact">Contact</a>
-      <!-- 여기에 나중에 PDF CV, HuggingFace 등 링크 추가 -->
-    </nav>
-  </header>
 
-  <section id="projects" class="section">
-    <h2>Featured Projects</h2>
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
 
-    <div class="project">
-      <h3>Standup4AI – LLM for Stand-up Comedy</h3>
-      <p class="meta">Python · PyTorch · LoRA · Vast.ai</p>
-      <p>
-        Fine-tuned open-source LLMs on stand-up comedy transcripts to generate
-        structured joke flows (setup → misdirection → punchline).
-      </p>
-      <ul>
-        <li>Collected and cleaned stand-up comedy transcripts from public datasets.</li>
-        <li>Implemented LoRA/QLoRA pipeline with evaluation on humor-style consistency.</li>
-        <li>Experimented with different model sizes and quantization strategies.</li>
-      </ul>
-      <div>
-        <span class="tag">LLM</span><span class="tag">NLP</span><span class="tag">PyTorch</span>
-      </div>
-    </div>
+    @media (min-width: 768px) {
+      .projects-grid {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      }
+    }
 
-    <div class="project">
-      <h3>Custom Heap Memory Allocator</h3>
-      <p class="meta">C · Operating Systems</p>
-      <p>
-        Implemented a K&amp;R-style heap allocator with free lists, coalescing, and splitting,
-        used as a drop-in replacement for malloc/free in course projects.
-      </p>
-      <ul>
-        <li>Designed chunk header/footer layout with alignment and size metadata.</li>
-        <li>Implemented coalescing and splitting to reduce external fragmentation.</li>
-        <li>Debugged memory errors (double free, invalid free) using custom checks.</li>
-      </ul>
-      <div>
-        <span class="tag">Systems</span><span class="tag">Memory</span>
-      </div>
-    </div>
+    .project-card {
+      position: relative;
+      border-radius: 16px;
+      padding: 14px 14px 13px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow:
+        0 14px 45px rgba(15, 23, 42, 0.85),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+      transition: 0.18s ease-out;
+      cursor: default;
+    }
 
-    <!-- 여기 아래로 프로젝트 계속 추가하면 됨 -->
-  </section>
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left,
+        rgba(56, 189, 248, 0.16),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: 0.22s ease-out;
+      pointer-events: none;
+    }
 
-  <section id="cv" class="section">
-    <h2>Mini CV</h2>
+    .project-card:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 22px 60px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(56, 189, 248, 0.55);
+    }
 
-    <h3>Education</h3>
-    <p><strong>Seoul National University</strong>, B.S. in Computer Science and Engineering (2022 – )</p>
-    <ul>
-      <li>Data Structures (top 3 / 180 students)</li>
-      <li>Operating Systems, Computer Architecture, Machine Learning</li>
-    </ul>
+    .project-card:hover::before {
+      opacity: 1;
+    }
 
-    <h3>Interests</h3>
-    <ul>
-      <li>Systems programming, operating systems, memory allocators</li>
-      <li>Large language models, reasoning, model compression</li>
-    </ul>
-  </section>
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
 
-  <section id="contact" class="section">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:YOUR_EMAIL@snu.ac.kr">YOUR_EMAIL@snu.ac.kr</a></p>
-    <p>GitHub: <a href="https://github.com/YOUR_GITHUB_ID" target="_blank">github.com/YOUR_GITHUB_ID</a></p>
-  </section>
-</body>
-</html>
+    .project-title {
+      font-size: 0.98rem;
+      font-weight: 500;
+    }
+
+    .project-title a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+      transition: 0.15s ease;
+    }
+
+    .project-title a:hover {
+      border-bottom-color: rgba(148, 163, 184, 0.6);
+    }
+
+    .project-label {
+      font-size: 0.7rem;
+      color: var(--text-sub);
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.9);
+      white-space: nowrap;
+    }
+
+    .project-meta {
+      font-size: 0.8rem;
