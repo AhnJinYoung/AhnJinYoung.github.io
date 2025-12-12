@@ -2,32 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ahn Jinyoung – Portfolio</title>
+  <title>Jin Young Ahn | Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-gradient: radial-gradient(circle at top left, #1f2933, #020617 55%, #000000 100%);
-      --card-bg: rgba(15, 23, 42, 0.88);
-      --card-border: rgba(148, 163, 184, 0.25);
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.12);
-      --text-main: #e5e7eb;
-      --text-sub: #94a3b8;
-      --chip-bg: rgba(15, 118, 110, 0.16);
-      --chip-border: rgba(34, 211, 238, 0.4);
+      --bg: #050910;
+      --panel: rgba(255, 255, 255, 0.035);
+      --panel-strong: rgba(255, 255, 255, 0.07);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #e9eef7;
+      --muted: #a5b6d3;
+      --accent: #f2c14f;
+      --accent-2: #4ce1c6;
+      --shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+      --radius: 16px;
+      --blur: 18px;
     }
 
-    body.dark {
-      --bg-gradient: radial-gradient(circle at top left, #020617, #000000 55%, #000000 100%);
-      --card-bg: rgba(15, 23, 42, 0.96);
-      --card-border: rgba(148, 163, 184, 0.35);
-      --accent: #f97316;
-      --accent-soft: rgba(249, 115, 22, 0.12);
-      --text-main: #e5e7eb;
-      --text-sub: #9ca3af;
-      --chip-bg: rgba(88, 28, 135, 0.32);
-      --chip-border: rgba(192, 132, 252, 0.4);
+    body.light {
+      --bg: #f8f6f2;
+      --panel: rgba(15, 22, 35, 0.04);
+      --panel-strong: rgba(15, 22, 35, 0.07);
+      --border: rgba(15, 22, 35, 0.12);
+      --text: #0f172a;
+      --muted: #4b5568;
+      --accent: #d79b00;
+      --accent-2: #0f9b8e;
+      --shadow: 0 20px 70px rgba(0, 0, 0, 0.14);
     }
 
     * {
@@ -36,366 +40,649 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
+      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
       min-height: 100vh;
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      line-height: 1.6;
-      color: var(--text-main);
-      background: var(--bg-gradient);
-      background-attachment: fixed;
+      overflow-x: hidden;
+      position: relative;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    .noise {
+    h1, h2, h3, h4 {
+      font-family: "Sora", "DM Sans", system-ui, sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .background {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: 0.18;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .gradient {
+      position: absolute;
+      width: 60vw;
+      height: 60vw;
+      filter: blur(110px);
+      opacity: 0.55;
+    }
+
+    .gradient-1 {
+      top: -18%;
+      left: -10%;
+      background: radial-gradient(circle, rgba(76, 225, 198, 0.5), transparent 60%);
+    }
+
+    .gradient-2 {
+      bottom: -22%;
+      right: -8%;
+      background: radial-gradient(circle, rgba(242, 193, 79, 0.55), transparent 55%);
+    }
+
+    .gradient-3 {
+      top: 20%;
+      right: 10%;
+      background: radial-gradient(circle, rgba(72, 116, 255, 0.25), transparent 55%);
+    }
+
+    .noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.28'/%3E%3C/svg%3E");
       mix-blend-mode: soft-light;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
-      z-index: -1;
+      opacity: 0.18;
     }
 
     .shell {
-      max-width: 980px;
+      width: min(1120px, 92vw);
       margin: 0 auto;
-      padding: 20px 20px 80px;
+      padding: 28px 0 90px;
     }
 
-    @media (min-width: 768px) {
-      .shell {
-        padding: 26px 24px 96px;
-      }
-    }
-
-    /* NAV */
-    .nav {
+    header.nav {
       position: sticky;
       top: 0;
-      z-index: 40;
-      backdrop-filter: blur(18px);
-      background: linear-gradient(to bottom,
-        rgba(15, 23, 42, 0.9),
-        rgba(15, 23, 42, 0.55),
-        transparent
-      );
-      margin-bottom: 18px;
+      z-index: 20;
+      backdrop-filter: blur(var(--blur));
+      background: linear-gradient(180deg, rgba(5, 9, 16, 0.65), transparent);
+      padding: 14px 0 8px;
     }
 
-    .nav-inner {
+    body.light header.nav {
+      background: linear-gradient(180deg, rgba(248, 246, 242, 0.92), rgba(248, 246, 242, 0.7));
+    }
+
+    .nav-shell {
+      width: min(1120px, 92vw);
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 4px 8px;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
     }
 
-    .nav-left {
+    .brand {
       display: flex;
-      flex-direction: column;
-      gap: 2px;
+      align-items: center;
+      gap: 12px;
     }
 
-    .nav-name {
-      font-size: 0.9rem;
-      letter-spacing: 0.08em;
+    .brand-mark {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 0 6px rgba(76, 225, 198, 0.2);
+    }
+
+    .brand-name {
+      font-size: 1rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text-sub);
+      color: var(--muted);
     }
 
-    .nav-role {
-      font-size: 0.8rem;
-      color: var(--text-main);
-      opacity: 0.75;
+    .brand-role {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.9;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .nav-links {
       display: flex;
-      align-items: center;
       gap: 12px;
-      font-size: 0.86rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .nav-links a {
-      text-decoration: none;
-      color: var(--text-sub);
-      padding: 4px 8px;
+      padding: 8px 12px;
       border-radius: 999px;
       border: 1px solid transparent;
-      transition: 0.16s ease;
+      color: var(--muted);
+      font-size: 0.92rem;
+      transition: all 0.2s ease;
     }
 
     .nav-links a:hover {
-      color: var(--text-main);
-      border-color: rgba(148, 163, 184, 0.4);
-      background: rgba(15, 23, 42, 0.8);
+      color: var(--text);
+      border-color: var(--border);
+      background: var(--panel);
     }
 
-    .toggle-btn {
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      padding: 9px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      padding: 4px 10px;
-      font-size: 0.8rem;
-      background: rgba(15, 23, 42, 0.85);
-      color: var(--text-sub);
+      font-size: 0.92rem;
       cursor: pointer;
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: 0.16s ease;
+      gap: 8px;
+      text-decoration: none;
     }
 
-    .toggle-btn span {
-      font-size: 0.95rem;
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0b0f1a;
+      border-color: transparent;
+      box-shadow: var(--shadow);
+      font-weight: 600;
     }
 
-    .toggle-btn:hover {
-      color: var(--text-main);
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.35);
+    .btn.ghost {
+      background: transparent;
     }
 
-    /* HERO */
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent-2);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+    }
+
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 3fr);
-      gap: 18px;
-      padding: 18px 4px 32px;
-    }
-
-    @media (min-width: 900px) {
-      .hero {
-        grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
-        align-items: center;
-        padding-top: 28px;
-      }
-    }
-
-    .hero-main h1 {
-      font-size: clamp(2.0rem, 3vw, 2.6rem);
-      letter-spacing: -0.03em;
-      margin-bottom: 6px;
-    }
-
-    .hero-sub {
-      font-size: 0.95rem;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
-
-    .hero-text {
-      font-size: 0.95rem;
-      color: var(--text-sub);
-      max-width: 34rem;
-    }
-
-    .hero-text strong {
-      color: var(--text-main);
-      font-weight: 500;
-    }
-
-    .hero-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .pill-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 11px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      text-decoration: none;
-      font-size: 0.86rem;
-      color: var(--text-sub);
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(14px);
-      transition: 0.16s ease;
-    }
-
-    .pill-link span.icon {
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-
-    .pill-link:hover {
-      color: var(--text-main);
-      border-color: var(--accent);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.9);
-      transform: translateY(-1px);
-    }
-
-    .hero-aside {
-      border-radius: 18px;
-      border: 1px solid var(--card-border);
-      padding: 14px 16px 14px;
-      background: linear-gradient(
-        140deg,
-        rgba(15, 23, 42, 0.96),
-        rgba(15, 23, 42, 0.86)
-      );
-      box-shadow:
-        0 14px 45px rgba(15, 23, 42, 0.85),
-        0 0 0 1px rgba(15, 23, 42, 0.9);
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.78rem;
-      padding: 4px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.45);
-      background: radial-gradient(circle at top left,
-        rgba(56, 189, 248, 0.25),
-        rgba(15, 23, 42, 0.9)
-      );
-      color: var(--text-main);
-      margin-bottom: 8px;
-    }
-
-    .hero-badge-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.22);
-    }
-
-    .hero-aside-title {
-      font-size: 0.9rem;
-      margin-bottom: 6px;
-    }
-
-    .hero-aside-list {
-      list-style: none;
-      font-size: 0.82rem;
-      color: var(--text-sub);
-    }
-
-    .hero-aside-list li + li {
-      margin-top: 4px;
-    }
-
-    /* GENERIC SECTIONS */
-    .section {
-      padding: 18px 4px 0;
-      margin-top: 6px;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 14px;
-      gap: 10px;
-    }
-
-    .section-title {
-      font-size: 1.1rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-sub);
-    }
-
-    .section-subtitle {
-      font-size: 0.82rem;
-      color: var(--text-sub);
-      opacity: 0.8;
-    }
-
-    /* PROJECTS */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 14px;
-    }
-
-    @media (min-width: 768px) {
-      .projects-grid {
-        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      }
-    }
-
-    .project-card {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+      margin-top: 32px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: linear-gradient(130deg, var(--panel-strong), var(--panel));
+      box-shadow: var(--shadow);
       position: relative;
-      border-radius: 16px;
-      padding: 14px 14px 13px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      box-shadow:
-        0 14px 45px rgba(15, 23, 42, 0.85),
-        0 0 0 1px rgba(15, 23, 42, 0.9);
       overflow: hidden;
-      transition: 0.18s ease-out;
-      cursor: default;
     }
 
-    .project-card::before {
+    .hero::after {
       content: "";
       position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left,
-        rgba(56, 189, 248, 0.16),
-        transparent 60%
-      );
-      opacity: 0;
-      transition: 0.22s ease-out;
+      top: -20%;
+      right: -10%;
+      width: 340px;
+      height: 340px;
+      background: radial-gradient(circle, rgba(76, 225, 198, 0.28), transparent 60%);
+      filter: blur(40px);
+      opacity: 0.6;
       pointer-events: none;
     }
 
-    .project-card:hover {
-      transform: translateY(-3px);
-      box-shadow:
-        0 22px 60px rgba(15, 23, 42, 0.95),
-        0 0 0 1px rgba(56, 189, 248, 0.55);
+    .hero-copy h1 {
+      font-size: clamp(2.1rem, 4vw, 2.8rem);
+      margin-bottom: 10px;
     }
 
-    .project-card:hover::before {
-      opacity: 1;
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 12px;
     }
 
-    .project-header {
+    .lede {
+      color: var(--muted);
+      max-width: 48ch;
+    }
+
+    .hero-chips {
       display: flex;
-      justify-content: space-between;
       gap: 10px;
+      flex-wrap: wrap;
+      margin: 16px 0 8px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 14px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .meta-card, .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 14px 16px;
+      backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow);
+    }
+
+    .card {
+      background: linear-gradient(140deg, var(--panel-strong), var(--panel));
+    }
+
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.72rem;
+      color: var(--muted);
       margin-bottom: 6px;
     }
 
-    .project-title {
-      font-size: 0.98rem;
-      font-weight: 500;
+    .muted {
+      color: var(--muted);
     }
 
-    .project-title a {
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px dashed transparent;
-      transition: 0.15s ease;
+    .hero-highlights {
+      display: grid;
+      gap: 12px;
     }
 
-    .project-title a:hover {
-      border-bottom-color: rgba(148, 163, 184, 0.6);
+    .bullet {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 10px;
+      align-items: start;
+      color: var(--muted);
+      font-size: 0.95rem;
     }
 
-    .project-label {
-      font-size: 0.7rem;
-      color: var(--text-sub);
-      padding: 3px 7px;
+    .bullet::before {
+      content: "•";
+      color: var(--accent);
+      margin-top: 1px;
+    }
+
+    .section {
+      margin-top: 34px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.96rem;
+      color: var(--muted);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .project header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+
+    .project h3 {
+      font-size: 1.12rem;
+      margin-top: 4px;
+    }
+
+    .project .pill {
+      margin-bottom: 2px;
+    }
+
+    .chip-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .chip {
+      padding: 5px 9px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-      white-space: nowrap;
+      background: var(--panel-strong);
+      border: 1px solid var(--border);
+      font-size: 0.86rem;
+      color: var(--muted);
     }
 
-    .project-meta {
-      font-size: 0.8rem;
+    .link-icon {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+
+    .link-icon:hover {
+      border-color: var(--accent-2);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .contact {
+      margin-top: 40px;
+    }
+
+    .contact-card {
+      border-radius: 22px;
+      padding: 22px 18px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(76, 225, 198, 0.14), rgba(242, 193, 79, 0.16), var(--panel));
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 10px;
+    }
+
+    footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 720px) {
+      .nav-shell {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-right {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .hero {
+        padding: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background">
+    <div class="gradient gradient-1"></div>
+    <div class="gradient gradient-2"></div>
+    <div class="gradient gradient-3"></div>
+    <div class="noise"></div>
+  </div>
+
+  <header class="nav">
+    <div class="nav-shell">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div>
+          <div class="brand-name">Jin Young Ahn</div>
+          <div class="brand-role">CS @ SNU · ML & Systems</div>
+        </div>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a class="btn ghost" href="Jin%20Young%20Ahn.docx" download>Download CV</a>
+        <button class="btn" id="themeToggle" type="button">Light mode</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero" id="about">
+      <div class="hero-copy">
+        <p class="eyebrow">Seoul, Korea · andy0808opp@snu.ac.kr</p>
+        <h1>Building thoughtful systems and ML experiences.</h1>
+        <p class="lede">
+          I am Jin Young Ahn, a Computer Science student at Seoul National University (expected Feb 2027)
+          exploring the overlap of language models, functional programming, and performant systems.
+        </p>
+        <div class="hero-chips">
+          <span class="pill">LLM fine-tuning</span>
+          <span class="pill">Functional interpreters</span>
+          <span class="pill">GPU & systems</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" href="mailto:andy0808opp@snu.ac.kr">Email me</a>
+          <a class="btn ghost" href="#projects">View work</a>
+          <a class="btn ghost" href="Jin%20Young%20Ahn.docx" download>Save CV</a>
+        </div>
+        <div class="meta-grid">
+          <div class="meta-card">
+            <div class="label">Education</div>
+            <div>B.S. Computer Science & Engineering, Seoul National University</div>
+            <div class="muted">Expected Feb 2027 · Seoul, Korea</div>
+          </div>
+          <div class="meta-card">
+            <div class="label">Coursework</div>
+            <div class="muted">NLP, ML/DL, Linear Algebra, System Programming, Computer Architecture</div>
+          </div>
+          <div class="meta-card">
+            <div class="label">Languages</div>
+            <div>Korean (Native), English (Fluent)</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-highlights">
+        <div class="label">Current highlights</div>
+        <div class="card">
+          <div class="bullet">Fine-tuning Llama 3.1-8B for structured standup comedy with Graph-of-Thoughts prompting.</div>
+          <div class="bullet">Designing interpreters for custom functional languages with call-by-value/name and lazy evaluation.</div>
+          <div class="bullet">Experimenting with automated trading systems and monitoring (personal, private repo).</div>
+          <div class="bullet">Open to ML/system internships and research projects.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section-head">
+        <div class="section-title">Projects</div>
+        <div class="muted">Selected work from recent builds</div>
+      </div>
+      <div class="cards-grid">
+        <article class="card project">
+          <header>
+            <div>
+              <div class="pill">LLM · Prompting</div>
+              <h3>Standup4AI</h3>
+            </div>
+            <a class="link-icon" href="https://github.com/AhnJinYoung/StandupComedy" target="_blank" rel="noreferrer">↗</a>
+          </header>
+          <p class="muted">
+            Fine-tuned Llama 3.1-8B for standup comedy generation and built a Graph-of-Thoughts prompter
+            to keep setups, callbacks, and punchlines structured.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Python</span>
+            <span class="chip">Llama 3.1-8B</span>
+            <span class="chip">GoT prompting</span>
+          </div>
+        </article>
+
+        <article class="card project">
+          <header>
+            <div>
+              <div class="pill">Compilers · Scala</div>
+              <h3>Functional Language Interpreter</h3>
+            </div>
+            <span class="link-icon muted">Private</span>
+          </header>
+          <p class="muted">
+            Implemented an interpreter for a custom functional language (E) supporting call-by-value/name,
+            lazy evaluation, and IO handling in Scala.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Scala</span>
+            <span class="chip">Evaluation models</span>
+            <span class="chip">Runtime design</span>
+          </div>
+        </article>
+
+        <article class="card project">
+          <header>
+            <div>
+              <div class="pill">Systems · Finance</div>
+              <h3>Crypto Trading Bot</h3>
+            </div>
+            <span class="link-icon muted">Private</span>
+          </header>
+          <p class="muted">
+            Personal bot for experimenting with automated trading flows and monitoring. Currently iterating on
+            strategy orchestration and safety rails.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Python</span>
+            <span class="chip">Automation</span>
+            <span class="chip">Monitoring</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="section-head">
+        <div class="section-title">Skills</div>
+        <div class="muted">Stacks and tools I work with</div>
+      </div>
+      <div class="skills-grid">
+        <div class="card">
+          <div class="label">Programming languages</div>
+          <div class="skill-list">
+            <span class="chip">C/C++</span>
+            <span class="chip">Python</span>
+            <span class="chip">Java</span>
+            <span class="chip">Scala</span>
+            <span class="chip">Rust</span>
+            <span class="chip">CUDA</span>
+            <span class="chip">Verilog</span>
+            <span class="chip">RISC-V assembly</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="label">AI / ML</div>
+          <p class="muted">NLP, ML/DL fundamentals, LLM fine-tuning, prompt + data design.</p>
+        </div>
+        <div class="card">
+          <div class="label">Systems</div>
+          <p class="muted">System programming, computer architecture, interpreter/runtime design, GPU and performance-aware coding.</p>
+        </div>
+        <div class="card">
+          <div class="label">Languages</div>
+          <p class="muted">English (Fluent), Korean (Native)</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="contact-card">
+        <div class="section-head">
+          <div class="section-title">Contact</div>
+          <div class="muted">Let us build something new</div>
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" href="mailto:andy0808opp@snu.ac.kr">andy0808opp@snu.ac.kr</a>
+          <a class="btn ghost" href="Jin%20Young%20Ahn.docx" download>Download CV</a>
+          <a class="btn ghost" href="https://github.com/AhnJinYoung" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+        <div class="muted">Based in Seoul · Open to ML and systems internships or research projects.</div>
+      </div>
+      <footer>Built with care — Jin Young Ahn</footer>
+    </section>
+  </main>
+
+  <script>
+    const toggle = document.getElementById("themeToggle");
+    const body = document.body;
+    const stored = localStorage.getItem("jy-theme");
+    if (stored === "light") {
+      body.classList.add("light");
+      toggle.textContent = "Dark mode";
+    }
+    toggle.addEventListener("click", () => {
+      body.classList.toggle("light");
+      const light = body.classList.contains("light");
+      toggle.textContent = light ? "Dark mode" : "Light mode";
+      localStorage.setItem("jy-theme", light ? "light" : "dark");
+    });
+  </script>
+</body>
+</html>
